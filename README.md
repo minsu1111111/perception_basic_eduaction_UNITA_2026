@@ -1,10 +1,12 @@
 # UNITA 2026.01.02 2차 기본교육
 
 본 교육은 지난주에 수행한 시뮬레이션 기반의 주행을 실제 테스트용 차량 플랫폼에 적용하기 전, 자율주행  차량의 인지부에 사용되는 주요한 센서인 카메라, 라이다, 초음파센서를 활용한 프로젝트를 수행하여 동아리 팀원 전체의 인지 기술의 기본 역량을 확보하는 데 있다.
-> ros2에 대한 기본 
+> ros2에 대한 토픽, 서비스, 액션 등 기본 통신구조는 
+> https://www.youtube.com/watch?v=u9Fubn3JRVA&list=PL0xYz_4oqpvhj4JaPSTeGI2k5GQEE36oi  
+> 해당 강의를 통해 익히고 올 것을 지시함.
 
 ## 참여 인원 및 일시 & 장소
-
+![image](img/1.jpg)
 - **강의자**: 김형진  
 - **교육 조교**: 이다빈, 윤제호  
 - **교육 참여자**:  
@@ -21,10 +23,8 @@
 ![mobility_signal](img/project_presentation_signal.png)
 
 ## ROS2 파일 계층 소개 및 pkg 생성 방법.
-
 ### ROS2 파일 시스템의 계층 구조
-일반적으로
-ROS2 파일시스템의 구조는 
+일반적으로 ROS2 파일시스템의 구조는 `src/`, `build/`, `install/`, `log/`로 구성되며, 소스는 `src/`에 두고 빌드 결과물(colcon build를 통해 생성된)은 `build/`와 `install/`에 생성됨. 또한 모든 pkg는 `src/`안에 존재해야한다.
 
 ### pkg 생성 방법
 ```sh
@@ -38,7 +38,7 @@ ros2 pkg create --build-type ament_cmake cpp_test_pkg
 ```
 
 ### 외부(github)에서 pkg 불러오기
-- [usb_cam Repo](https://github.com/ros-drivers/usb_cam)
+- [usb_cam Repo](https://github.com/ros-drivers/usb_cam) ros 공식 레포
 ```sh
 ### usb_cam package install guide
 sudo apt-get install ros-humble-usb-cam
@@ -47,7 +47,7 @@ cd ~/본인의 워크스페이스/src
 
 git clone https://github.com/ros-drivers/usb_cam.git
 ```
-- [rplidar_ros Repo](https://github.com/Slamtec/rplidar_ros)
+- [rplidar_ros Repo](https://github.com/Slamtec/rplidar_ros) 회사에서 만든 레포
 
 ```sh
 ### rplidar package install guide
@@ -59,10 +59,14 @@ git branch # 해당 repo는 기본 값이 ros1, 즉 catkin build system을 사�
 
 git checkout ros2 # 해당 명령어로 branch를 ros2로 변경해줘야함.
 ```
+공식 레포는 apt install을 해주어야함. 그 이유는 ros 배포판에서 검증된 바이너리와 의존 패키지, udev 규칙 등이 함께 설치되기 때문이며, 단순히 소스만 clone하면 필요한 설정이 누락될 수 있음.
+
+### setup.py, Cmakelist.txt
+`setup.py`는 Python 패키지의 빌드/설치 정보를 정의하고, `CMakeLists.txt`는 C++ 패키지의 빌드 규칙과 의존성을 정의함. 코드를 추가하면 파이썬 패키지의 경우 `entry point`를 추가해야 하고, C++ 패키지의 경우 `add_executable`과 `ament_target_dependencies`를 등록해야 함.
 
 ## 0. 경쟁형 퀴즈를 통한 팀 배치
 세부사항은 quiz.md 참고
-[시뮬레이션 설명](./quiz.md/)
+[quiz 설명](./quiz.md/)
 ```
 1팀 7점    2팀 0점    3팀 3점
 4팀 6점    5팀 2좀    6팀 4점
@@ -71,8 +75,14 @@ git checkout ros2 # 해당 명령어로 branch를 ros2로 변경해줘야함.
 - **perception1(camera)**: 이다빈, 정가용, 강민수, 장동혁, 한주형
 - **perception2(ultrasonic, 2d lidar)**: 윤제호, 윤지윤, 정규민, 김민서, 이원종
 
+## 펌웨어 팀 활동 내역
+![firmware team img](img/12.jpg)
+펌웨어 기반 차량 모터 구동 테스트, 전력계통 구성 및 배선 까지 작업 완료.
 
 ## 인지 1팀 미션 : 카메라 기반 신호등 인지
+![firmware team img](img/3.jpg)
+결과는 링크 참고 ->
+[결과](./Team2_perception/README.md)
 
 ### 팀 구성
 - 실습조교: 이다빈  
@@ -101,6 +111,9 @@ git checkout ros2 # 해당 명령어로 branch를 ros2로 변경해줘야함.
 
 
 ## 인지 2팀 미션 : 초음파 센서 및 LiDAR 기반 물체 인지
+![firmware team img](img/7.jpg)
+결과는 링크 참고 ->
+[결과](./Team3_perception/README.md)
 
 ### 팀 구성
 - 실습조교: 윤제호  
